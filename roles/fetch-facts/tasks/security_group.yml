@@ -1,0 +1,21 @@
+---
+
+- name: get Security group info
+  command: "aws ec2 describe-security-groups --region {{ aws_region }}"
+  register: get_security_group_info
+  changed_when: false
+
+- set_fact:
+    securityGroup: "{{ get_security_group_info.stdout|from_json }}"
+  tags: fetchvpc
+
+- name: Populate SecurityGroupIds
+  set_fact:
+    SecurityGroupIds: "{{ lookup('template', 'security_group.j2') }}"
+  vars:
+    securityGroups: "{{ securityGroup.SecurityGroups }}"
+
+- debug: msg="{{ SecurityGroupIds }}"
+
+
+

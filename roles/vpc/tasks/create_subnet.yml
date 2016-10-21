@@ -1,0 +1,118 @@
+- name:               Create Public Subnet
+  ec2_vpc_subnet:
+    state:            "present"
+    vpc_id:           "{{ vpc_id }}"
+    cidr:             "{{ infra_cidr_blocks.public_subnet_1 }}"
+    az:               "{{ aws_region }}a"
+    region:           "{{ aws_region }}"
+    aws_access_key:   "{{ aws_access_key }}"
+    aws_secret_key:   "{{ aws_secret_key }}"
+    resource_tags:
+      Name:           "public"
+  register: public_subnet
+
+- name:               Create assets Subnet
+  ec2_vpc_subnet:
+    state:            "present"
+    vpc_id:           "{{ vpc_id }}"
+    cidr:             "{{ cidr_blocks.assets_subnet_1 }}"
+    az:               "{{ aws_region }}a"
+    region:           "{{ aws_region }}"
+    aws_access_key:   "{{ aws_access_key }}"
+    aws_secret_key:   "{{ aws_secret_key }}"
+    resource_tags:
+      Name:           "assets"
+  register: assets_subnet
+
+- name:               Create Build_Agents Subnet
+  ec2_vpc_subnet:
+    state:            "present"
+    vpc_id:           "{{ vpc_id }}"
+    cidr:             "{{ cidr_blocks.build_agents_subnet_1 }}"
+    az:               "{{ aws_region }}a"
+    region:           "{{ aws_region }}"
+    aws_access_key:   "{{ aws_access_key }}"
+    aws_secret_key:   "{{ aws_secret_key }}"
+    resource_tags:
+      Name:           "build"
+  register: build_agents_subnet
+
+- name:               Create Dev Subnet
+  ec2_vpc_subnet:
+    state:            "present"
+    vpc_id:           "{{ vpc_id }}"
+    cidr:             "{{ cidr_blocks.dev_subnet_1 }}"
+    az:               "{{ aws_region }}a"
+    region:           "{{ aws_region }}"
+    aws_access_key:   "{{ aws_access_key }}"
+    aws_secret_key:   "{{ aws_secret_key }}"
+    resource_tags:
+      Name:           "dev"
+  register: dev_subnet
+
+
+
+- name:               Create Qa Subnet
+  ec2_vpc_subnet:
+    state:            "present"
+    vpc_id:           "{{ vpc_id }}"
+    cidr:             "{{ cidr_blocks.qa_subnet_1 }}"
+    az:               "{{ aws_region }}a"
+    region:           "{{ aws_region }}"
+    aws_access_key:   "{{ aws_access_key }}"
+    aws_secret_key:   "{{ aws_secret_key }}"
+    resource_tags:
+      Name:           "qa"
+  register: qa_subnet
+
+- name:               Create Showcase Subnet
+  ec2_vpc_subnet:
+    state:            "present"
+    vpc_id:           "{{ vpc_id }}"
+    cidr:             "{{ cidr_blocks.showcase_subnet_1 }}"
+    az:               "{{ aws_region }}a"
+    region:           "{{ aws_region }}"
+    aws_access_key:   "{{ aws_access_key }}"
+    aws_secret_key:   "{{ aws_secret_key }}"
+    resource_tags:
+      Name:           "showcase"
+  register: showcase_subnet
+
+- name:               Create Local Staging Subnet
+  ec2_vpc_subnet:
+    state:            "present"
+    vpc_id:           "{{ vpc_id }}"
+    cidr:             "{{ cidr_blocks.local_staging_subnet_1 }}"
+    az:               "{{ aws_region }}a"
+    region:           "{{ aws_region }}"
+    aws_access_key:   "{{ aws_access_key }}"
+    aws_secret_key:   "{{ aws_secret_key }}"
+    resource_tags:
+      Name:           "local_staging"
+  register: local_staging_subnet
+
+- name:               Create Performance Subnet
+  ec2_vpc_subnet:
+    state:            "present"
+    vpc_id:           "{{ vpc_id }}"
+    cidr:             "{{ cidr_blocks.performance_subnet_1 }}"
+    az:               "{{ aws_region }}a"
+    region:           "{{ aws_region }}"
+    aws_access_key:   "{{ aws_access_key }}"
+    aws_secret_key:   "{{ aws_secret_key }}"
+    resource_tags:
+      Name:           "performance"
+  register: performance_subnet
+
+
+
+- name:               Set Subnet ID in variable
+  set_fact:
+    public_subnet_id: "{{ public_subnet.subnet.id }}"
+    assets_subnet_id: "{{ assets_subnet.subnet.id }}"
+    dev_subnet_id: "{{ dev_subnet.subnet.id }}"
+    qa_subnet_id: "{{ qa_subnet.subnet.id }}"
+    build_agents_subnet_id: "{{ build_agents_subnet.subnet.id }}"
+    showcase_subnet_id: "{{ showcase_subnet.subnet.id }}"
+    local_staging_subnet_id: "{{ local_staging_subnet.subnet.id }}"
+    performance_subnet_id: "{{ performance_subnet.subnet.id }}"

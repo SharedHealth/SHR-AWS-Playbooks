@@ -1,0 +1,5 @@
+---
+
+- include: vpc.yml
+- include: subnet.yml
+- include: security_group.yml

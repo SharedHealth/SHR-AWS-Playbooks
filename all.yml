@@ -1,0 +1,8 @@
+---
+
+- hosts: all
+  roles:
+    - { role: vpc }
+  vars_files:
+    - "group_vars/secure_vars.yml"
+

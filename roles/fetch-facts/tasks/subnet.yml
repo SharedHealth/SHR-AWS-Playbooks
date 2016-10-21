@@ -1,0 +1,16 @@
+---
+
+- ec2_vpc_subnet_facts:
+    region: "{{ aws_region }}"
+    filters:
+       vpc-id: "{{ VpcId }}"
+  register: subnet_facts
+
+- name: Populate SubnetIds
+  set_fact:
+    SubnetIds: "{{ lookup('template', 'subnets.j2') }}"
+  vars:
+    subnets: "{{ subnet_facts.subnets }}"
+
+- debug: msg="{{ SubnetIds }}"
+
