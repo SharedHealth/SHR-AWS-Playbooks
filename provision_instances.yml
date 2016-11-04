@@ -1,7 +1,0 @@
----
-
-- hosts: all
-  roles:
-    - provision-instances
-  vars_files:
-        - "group_vars/secure_vars.yml"
