@@ -9,6 +9,17 @@
     rules:            "{{ bastion_rules }}"
     rules_egress:     "{{ bastion_rules_egress }}"
 
+- name:               Create buildserver Security Group
+  ec2_group:
+    name:             "buildserver"
+    description:      "Permissions for buildserver"
+    vpc_id:           "{{ vpc_id }}"
+    region:           "{{ aws_region }}"
+    aws_access_key:   "{{ aws_access_key }}"
+    aws_secret_key:   "{{ aws_secret_key }}"
+    rules:            "{{ buildserver_rules }}"
+    rules_egress:     "{{ buildserver_rules_egress }}"
+
 - name:               Create TW proxy Security Group
   ec2_group:
     name:             "tw_proxy"
@@ -19,6 +30,7 @@
     aws_secret_key:   "{{ aws_secret_key }}"
     rules:            "{{ tw_proxy_rules }}"
     rules_egress:     "{{ tw_proxy_rules_egress }}"
+
 
 - name:               Create public proxy Security Group
   ec2_group:
@@ -31,24 +43,13 @@
     rules:            "{{ public_proxy_rules }}"
     rules_egress:     "{{ public_proxy_rules_egress }}"
 
-- name:               Create Bahmni Security Group
+- name:               Create SHR Security Group
   ec2_group:
-    name:             "bahmni"
-    description:      "Permissions for a machine that runs Bahmni software"
+    name:             "shr"
+    description:      "Permissions for a machine that runs shr software"
     vpc_id:           "{{ vpc_id }}"
     region:           "{{ aws_region }}"
     aws_access_key:   "{{ aws_access_key }}"
     aws_secret_key:   "{{ aws_secret_key }}"
-    rules:            "{{ bahmni_rules }}"
-    rules_egress:     "{{ bahmni_rules_egress }}"
-
-- name:               Create buildserver Security Group
-  ec2_group:
-    name:             "buildserver"
-    description:      "Permissions for buildserver"
-    vpc_id:           "{{ vpc_id }}"
-    region:           "{{ aws_region }}"
-    aws_access_key:   "{{ aws_access_key }}"
-    aws_secret_key:   "{{ aws_secret_key }}"
-    rules:            "{{ buildserver_rules }}"
-    rules_egress:     "{{ buildserver_rules_egress }}"
+    rules:            "{{ shr_rules }}"
+    rules_egress:     "{{ shr_rules_egress }}"

@@ -14,7 +14,3 @@
     SecurityGroupIds: "{{ lookup('template', 'security_group.j2') }}"
   vars:
     securityGroups: "{{ securityGroup.SecurityGroups }}"
-
-
-
-

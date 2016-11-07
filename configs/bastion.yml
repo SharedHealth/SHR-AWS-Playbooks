@@ -1,0 +1,19 @@
+bastion_spec:
+   Tags: {"role": "bastion-server"}
+   StartIndex: 1
+   ExactCount: 1
+   InstanceType: t2.micro
+   SecurityGroups:
+     - "{{ SecurityGroupIds.bastion }}"
+   AmiId: "{{ available_amis.hardened_ami }}"
+   SubnetId: "{{ SubnetIds.public }}"
+   AssignPublicIp: yes
+   InstanceVolumes:
+     - VolumeSpecifications:
+         - volume_size: 20
+           volume_type: gp2
+           device_name: /dev/sda1
+           delete_on_termination: yes
+           FilesystemSpecifications:
+             volume_label: "root"
+           mountpoint: /

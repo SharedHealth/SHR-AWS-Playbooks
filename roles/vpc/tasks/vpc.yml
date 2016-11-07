@@ -6,6 +6,6 @@
     aws_access_key:   "{{ aws_access_key }}"
     aws_secret_key:   "{{ aws_secret_key }}"
     state:            "present"
-  register: bahmni_dev_infra_vpc
+  register: shr_infra_vpc
 
-- set_fact: vpc_id={{ bahmni_dev_infra_vpc.vpc.id }}
+- set_fact: vpc_id={{ shr_infra_vpc.vpc.id }}

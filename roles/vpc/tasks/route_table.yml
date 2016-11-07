@@ -4,6 +4,7 @@
     region:           "{{ aws_region }}"
     aws_access_key:   "{{ aws_access_key }}"
     aws_secret_key:   "{{ aws_secret_key }}"
+    state: present
     tags:
       Name:           "Public"
     subnets: "{{infra_cidr_blocks.public_subnet_1}}"
@@ -22,9 +23,9 @@
       Name:           "Outbound from vpc_default"
     subnets:
       - "{{ assets_subnet_id }}"
-      - "{{ qa_subnet_id }}"
       - "{{ build_agents_subnet_id }}"
-      - "{{ showcase_subnet_id }}"
+      - "{{ qa_subnet_id }}"
+#      - "{{ showcase_subnet_id }}"
     routes:
         - dest:        "{{infra_cidr_blocks.all}}"
           gateway_id: "{{nat_output['NatGateway']['NatGatewayId']}}"
