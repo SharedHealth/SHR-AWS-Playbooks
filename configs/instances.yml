@@ -3,4 +3,5 @@ ec2_instances:
   - { hostname: bastion, spec: "{{ bastion_spec }}" }
   - { hostname: public_proxy, spec: "{{ public_proxy_spec }}" }
   - { hostname: build-ci, spec: "{{ build_server_spec }}" }
+  - { hostname: build-agent, spec: "{{ build_server_spec }}" }
 

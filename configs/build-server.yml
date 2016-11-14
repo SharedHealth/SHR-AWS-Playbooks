@@ -1,5 +1,5 @@
 build_server_spec:
-   Tags: {"role": "build-server", "server_type": "public"}
+   Tags: {"role": "build", "server_type": "private"}
    StartIndex: 1
    ExactCount: 1
    InstanceType: m4.large
