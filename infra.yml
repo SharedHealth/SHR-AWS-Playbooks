@@ -1,13 +1,13 @@
 ---
 - hosts: all
-  roles: 
+  roles:
     - vpc
   vars_files:
     - "group_vars/secure_vars.yml"
     - "group_vars/vars.yml"
     - "group_vars/cidr_blocks.yml"
-  tags: 
-    - create-vpc
+    tags:
+      - create-vpc
 
 - hosts: all
   roles:

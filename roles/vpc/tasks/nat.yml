@@ -1,10 +1,3 @@
-- name: Allocate a new elastic IP without associating it to anything
-  environment:
-      AWS_ACCESS_KEY_ID: "{{ aws_access_key }}"
-      AWS_SECRET_ACCESS_KEY: "{{ aws_secret_key }}"
-  ec2_eip: in_vpc=yes reuse_existing_ip_allowed=yes state=present region="{{aws_region}}"
-  register: eip
-
 - name: Fetch All NAT
   environment:
       AWS_ACCESS_KEY_ID: "{{ aws_access_key }}"
@@ -20,6 +13,13 @@
       AWS_SECRET_ACCESS_KEY: "{{ aws_secret_key }}"
   shell: "aws ec2 delete-nat-gateway --region {{aws_region}} --nat-gateway-id {{item.NatGatewayId}}"
   with_items: "{{ nats_to_be_deleted.NatGateways }}"
+
+- name: Allocate a new elastic IP without associating it to anything
+  environment:
+      AWS_ACCESS_KEY_ID: "{{ aws_access_key }}"
+      AWS_SECRET_ACCESS_KEY: "{{ aws_secret_key }}"
+  ec2_eip: in_vpc=yes reuse_existing_ip_allowed=yes state=present region="{{aws_region}}"
+  register: eip
 
 - name: Create NAT and associate eip
   environment:

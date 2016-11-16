@@ -24,8 +24,11 @@
     subnets:
       - "{{ assets_subnet_id }}"
       - "{{ build_agents_subnet_id }}"
+      - "{{ dev_subnet_id }}"
       - "{{ qa_subnet_id }}"
-#      - "{{ showcase_subnet_id }}"
+      - "{{ showcase_subnet_id }}"
+      - "{{ staging_subnet_id }}"
+      - "{{ performance_subnet_id }}"
     routes:
         - dest:        "{{infra_cidr_blocks.all}}"
           gateway_id: "{{nat_output['NatGateway']['NatGatewayId']}}"
