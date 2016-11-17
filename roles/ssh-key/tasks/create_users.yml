@@ -1,3 +1,4 @@
+- debug: msg="{{server.tags.Name}}"
 
 - name: Create developers_groups
   become: yes
@@ -12,23 +13,23 @@
     append: no
     shell: "{{shell}}"
   delegate_to: "{{server.tags.Name}}"
-  with_items: "{{add_users}}"
+  with_items: "{{developers}}"
 
 - name: Add keys to account
   become: yes
   authorized_key:
     user: "{{item.name}}"
-    key: "{{item.authorized}}"
+    key: "{{item.key}}"
     exclusive: yes
   delegate_to: "{{server.tags.Name}}"
-  with_items: "{{add_users}}"
+  with_items: "{{developers}}"
 
 - name: remove unauthorized user accounts
   user:
     name: "{{item.name}}"
     state: "{{item.state}}"
   delegate_to: "{{server.tags.Name}}"
-  with_items: "{{add_users}}"
+  with_items: "{{developers}}"
 
 - name: Add developers_groups group to sudo
   become: yes

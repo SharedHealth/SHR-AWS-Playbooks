@@ -3,8 +3,8 @@
     aws_secret_key: "{{ aws_secret_key }}"
     region:           "{{ aws_region }}"
     filters:
-       instance-state-name: running
-  register: bahmni_server_instances
+      instance-state-name: running
+  register: hie_server_instances
 
 - name: Add servers to dynamic host group
   add_host:
@@ -12,9 +12,9 @@
     groupname: gatewayed
     ansible_ssh_host: "{{ item.private_ip_address }}"
     ansible_user: centos
-  with_items: "{{ bahmni_server_instances.instances }}"
+  with_items: "{{ hie_server_instances.instances }}"
 
 - include: create_users.yml
-  with_items: "{{ bahmni_server_instances.instances }}"
+  with_items: "{{ hie_server_instances.instances }}"
   loop_control:
     loop_var: server

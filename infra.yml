@@ -13,6 +13,7 @@
   roles:
     - fetch-facts
     - ec2-instance
+    - ssh-key
   vars_files:
     - "group_vars/secure_vars.yml"
     - "group_vars/vars.yml"
@@ -20,10 +21,10 @@
     - "configs/bastion.yml"
     - "configs/build-server.yml"
     - "configs/proxy-server.yml"
-    - "configs/dev-hie-instance.yml"
     - "configs/instances.yml"
+    - "configs/dev-hie-instance.yml"
   tags:
-    - setup_instance
+    - setup-instance
 
 - hosts: all
   roles:
