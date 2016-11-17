@@ -7,4 +7,4 @@ ec2_instances:
   - { hostname: dev-box-1, spec: "{{ dev_box_spec }}" }
   - { hostname: dev-box-2, spec: "{{ dev_box_spec }}" }
   - { hostname: dev-box-3, spec: "{{ dev_box_spec }}" }
-  - { hostname: dev-box-4`, spec: "{{ dev_box_spec }}" }
+  - { hostname: dev-box-4, spec: "{{ dev_box_spec }}" }
