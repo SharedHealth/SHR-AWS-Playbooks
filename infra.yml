@@ -6,8 +6,8 @@
     - "group_vars/secure_vars.yml"
     - "group_vars/vars.yml"
     - "group_vars/cidr_blocks.yml"
-    tags:
-      - create-vpc
+  tags:
+    - create-vpc
 
 - hosts: all
   roles:
@@ -20,6 +20,7 @@
     - "configs/bastion.yml"
     - "configs/build-server.yml"
     - "configs/proxy-server.yml"
+    - "configs/dev-hie-instance.yml"
     - "configs/instances.yml"
   tags:
     - setup_instance

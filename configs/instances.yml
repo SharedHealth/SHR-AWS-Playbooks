@@ -4,4 +4,7 @@ ec2_instances:
   - { hostname: public_proxy, spec: "{{ public_proxy_spec }}" }
   - { hostname: build-ci, spec: "{{ build_server_spec }}" }
   - { hostname: build-agent, spec: "{{ build_server_spec }}" }
-
+  - { hostname: dev-box-1, spec: "{{ dev_box_spec }}" }
+  - { hostname: dev-box-2, spec: "{{ dev_box_spec }}" }
+  - { hostname: dev-box-3, spec: "{{ dev_box_spec }}" }
+  - { hostname: dev-box-4`, spec: "{{ dev_box_spec }}" }
