@@ -14,7 +14,7 @@ may be required${NC}\n"
 
 
 # Ansible - Ensure you have something >2.1
-#brew install ansible
+# brew install ansible
 
 # Python modules that we use
 # pip install boto
@@ -24,10 +24,10 @@ may be required${NC}\n"
 # echo "Please decrypt secure_vars.yml to find the right values"
 # aws-configure
 
-# echo "Setting up ssh agent and adding bahmni launch key"
+# echo "Setting up ssh agent and adding HIE launch key"
 # eval "$(ssh-agent -s)"
-# ansible decrypt group_vars/bahmni_launch_key.pem
-# ssh-add group_vars/bahmni_launch_key.pem
+# ansible decrypt group_vars/hie_launch_key.pem
+# ssh-add group_vars/hie_launch_key.pem
 
-
-ansible-playbook -i inventory infra.yml -vvv
+# Provide the tags to be run
+ansible-playbook -i inventory infra.yml -vvv --tags "${@:1}"

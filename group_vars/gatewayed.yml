@@ -1,1 +1,1 @@
-ansible_ssh_common_args: '-o ProxyCommand="ssh -i ./group_vars/shr_launch_key.pem -W %h:%p centos@54.179.186.218"'
+ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p centos@54.169.190.48"'
