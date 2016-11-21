@@ -2,8 +2,11 @@
 ec2_instances:
   - { hostname: bastian, spec: "{{ bastion_spec }}", allocate_eip: true }
   - { hostname: public_proxy, spec: "{{ public_proxy_spec }}", allocate_eip: true }
+  - { hostname: build-ci, spec: "{{ build_server_spec }}", allocate_eip: false }
   - { hostname: build-agent, spec: "{{ build_server_spec }}", allocate_eip: false }
   - { hostname: dev-01, spec: "{{ dev_box_spec }}", allocate_eip: false }
   - { hostname: dev-02, spec: "{{ dev_box_spec }}", allocate_eip: false }
   - { hostname: dev-03, spec: "{{ dev_box_spec }}", allocate_eip: false }
   - { hostname: dev-04, spec: "{{ dev_box_spec }}", allocate_eip: false }
+  - { hostname: dev-05, spec: "{{ dev_box_spec }}", allocate_eip: false }
+  - { hostname: dev-06, spec: "{{ dev_box_spec }}", allocate_eip: false }
