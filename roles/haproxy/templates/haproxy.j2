@@ -63,14 +63,32 @@ defaults
 # main frontend which proxys to the backends
 #---------------------------------------------------------------------
 frontend http-in
-        bind :80
-        reqadd X-Forwarded-Proto:\ http
+        bind :443
+        reqadd X-Forwarded-Proto:\ https
 
-        acl host_ci_service hdr(host) -i ci-server.twhie.org
+        acl host_ci_service hdr(host) -i hie-ci-server.twhosted.com
         use_backend ci_service if host_ci_service
+
+        acl host_dev_h1 hdr(host) -i h1-dev.twhosted.com
+        use_backend dev_h1_service if host_dev_h1
+
+        acl host_dev_h2 hdr(host) -i h2-dev.twhosted.com
+        use_backend dev_h2_service if host_dev_h2
+
+        acl host_dev_env hdr_end(host) -i dev.twhosted.com
+        use_backend dev_env_proxy if host_dev_env
 
 #---------------------------------------------------------------------
 # round robin balancing between the SHR Service backends
 #---------------------------------------------------------------------
 backend ci_service
-    server build-server 172.21.1.31:8153
+    server build-server 172.21.1.170:8154
+
+backend dev_h1_service
+    server dev_h1_server 172.21.2.206:443
+
+backend dev_h2_service
+    server dev_h2_server 172.21.2.148:443
+
+backend dev_env_proxy
+    server dev_env_proxy_server 172.21.2.88:443

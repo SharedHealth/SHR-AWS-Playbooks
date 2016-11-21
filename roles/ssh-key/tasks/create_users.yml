@@ -18,14 +18,17 @@
   authorized_key:
     user: "{{item.name}}"
     key: "{{item.key}}"
+    state: "{{item.state}}"
     exclusive: yes
   delegate_to: "{{server.tags.Name}}"
   with_items: "{{developers}}"
 
 - name: remove unauthorized user accounts
+  become: yes
   user:
     name: "{{item.name}}"
     state: "{{item.state}}"
+    remove: yes
   delegate_to: "{{server.tags.Name}}"
   with_items: "{{developers}}"
 
