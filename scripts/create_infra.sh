@@ -26,8 +26,17 @@ may be required${NC}\n"
 
 # echo "Setting up ssh agent and adding HIE launch key"
 # eval "$(ssh-agent -s)"
-# ansible decrypt group_vars/hie_launch_key.pem
+# ansible-vault decrypt group_vars/hie_launch_key.pem
 # ssh-add group_vars/hie_launch_key.pem
+
+# To setup VPC from scratch, run the plays with tags in the following order
+# 1. Run play with 'create-vpc' tag
+# 2. Update box settings in 'configs/instances.yml'
+# 3. Run play with 'create-instance' tag
+# 4. Update 'group_vars/gatewayed.yml' and replace the bastion box ip with correct public ip.
+# 5. Run play with 'ssh-key' tag
+# 6. Update Proxy settings in 'roles/haproxy/templates/haproxy.j2'
+# 7. Run play with 'proxy' tag
 
 # Provide the tags to be run
 ansible-playbook -i inventory infra.yml -vvv --tags "${@:1}"
