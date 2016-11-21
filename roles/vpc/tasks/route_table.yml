@@ -23,7 +23,6 @@
       Name:           "Outbound from vpc_default"
     subnets:
       - "{{ assets_subnet_id }}"
-      - "{{ build_agents_subnet_id }}"
       - "{{ dev_subnet_id }}"
       - "{{ qa_subnet_id }}"
       - "{{ showcase_subnet_id }}"

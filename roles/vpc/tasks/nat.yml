@@ -14,6 +14,9 @@
   shell: "aws ec2 delete-nat-gateway --region {{aws_region}} --nat-gateway-id {{item.NatGatewayId}}"
   with_items: "{{ nats_to_be_deleted.NatGateways }}"
 
+- name: Pause for NAT to be deleted
+  pause: seconds=120
+
 - name: Allocate a new elastic IP without associating it to anything
   environment:
       AWS_ACCESS_KEY_ID: "{{ aws_access_key }}"
@@ -29,3 +32,6 @@
   register: nat
 
 - set_fact: nat_output={{nat.stdout |from_json}}
+
+- name: Pause for NAT to be created
+  pause: seconds=120

@@ -20,17 +20,6 @@
     rules:            "{{ buildserver_rules }}"
     rules_egress:     "{{ buildserver_rules_egress }}"
 
-- name:               Create TW proxy Security Group
-  ec2_group:
-    name:             "tw_proxy"
-    description:      "Permissions for the http proxies available only internally"
-    vpc_id:           "{{ vpc_id }}"
-    region:           "{{ aws_region }}"
-    aws_access_key:   "{{ aws_access_key }}"
-    aws_secret_key:   "{{ aws_secret_key }}"
-    rules:            "{{ tw_proxy_rules }}"
-    rules_egress:     "{{ tw_proxy_rules_egress }}"
-
 - name:               Create public proxy Security Group
   ec2_group:
     name:             "public_proxy"
