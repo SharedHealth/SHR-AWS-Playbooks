@@ -89,8 +89,14 @@
     state=present
   with_items: "{{ proxy_instances.instances }}"
 
-- name: Set Selinux to allow outbound access
+- name: Set Selinux 8153 to allow outbound access
   seport: ports=8153 proto=tcp setype=http_port_t state=present
+  become: yes
+  delegate_to: "{{ item.tags.Name }}"
+  with_items: "{{ proxy_instances.instances }}"
+
+- name: Set Selinux 8154 to allow outbound access
+  seport: ports=8154 proto=tcp setype=http_port_t state=present
   become: yes
   delegate_to: "{{ item.tags.Name }}"
   with_items: "{{ proxy_instances.instances }}"
