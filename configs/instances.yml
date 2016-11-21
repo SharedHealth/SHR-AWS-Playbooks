@@ -1,10 +1,9 @@
 # Proxy instance spin up must be preceeded the HIE instances.
 ec2_instances:
-  - { hostname: bastion, spec: "{{ bastion_spec }}" }
-  - { hostname: public_proxy, spec: "{{ public_proxy_spec }}" }
-  - { hostname: build-ci, spec: "{{ build_server_spec }}" }
-  - { hostname: build-agent, spec: "{{ build_server_spec }}" }
-  - { hostname: dev-box-1, spec: "{{ dev_box_spec }}" }
-  - { hostname: dev-box-2, spec: "{{ dev_box_spec }}" }
-  - { hostname: dev-box-3, spec: "{{ dev_box_spec }}" }
-  - { hostname: dev-box-4, spec: "{{ dev_box_spec }}" }
+  - { hostname: bastian, spec: "{{ bastion_spec }}", allocate_eip: true }
+  - { hostname: public_proxy, spec: "{{ public_proxy_spec }}", allocate_eip: true }
+  - { hostname: build-agent, spec: "{{ build_server_spec }}", allocate_eip: false }
+  - { hostname: dev-01, spec: "{{ dev_box_spec }}", allocate_eip: false }
+  - { hostname: dev-02, spec: "{{ dev_box_spec }}", allocate_eip: false }
+  - { hostname: dev-03, spec: "{{ dev_box_spec }}", allocate_eip: false }
+  - { hostname: dev-04, spec: "{{ dev_box_spec }}", allocate_eip: false }

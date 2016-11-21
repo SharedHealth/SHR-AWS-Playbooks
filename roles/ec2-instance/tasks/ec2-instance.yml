@@ -18,3 +18,17 @@
    assign_public_ip: "{{ instance.spec.AssignPublicIp }}"
    wait: yes
   register: created_instance
+
+- name: Allocating elastic IP to instance
+  ec2_eip:
+    region: "{{aws_region}}"
+    aws_access_key:   "{{ aws_access_key }}"
+    aws_secret_key:   "{{ aws_secret_key }}"
+    in_vpc: yes
+    reuse_existing_ip_allowed: yes
+    state: present
+    device_id: "{{ created_instance.instance_ids[0] }}"
+  register: instance_eip
+  when:
+    - instance.allocate_eip
+    - created_instance.instance_ids > 0

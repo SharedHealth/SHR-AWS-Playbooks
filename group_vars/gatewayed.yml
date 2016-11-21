@@ -1,1 +1,1 @@
-ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p centos@54.169.190.48"'
+ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p centos@bastion.twhie.org"'

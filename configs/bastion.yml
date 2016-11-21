@@ -10,7 +10,7 @@ bastion_spec:
    AssignPublicIp: yes
    InstanceVolumes:
      - VolumeSpecifications:
-         - volume_size: 20
+         - volume_size: 10
            volume_type: gp2
            device_name: /dev/sda1
            delete_on_termination: yes
