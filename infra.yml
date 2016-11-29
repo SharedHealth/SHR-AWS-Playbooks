@@ -37,6 +37,7 @@
 
 - hosts: all
   roles:
+    - ssl-certs
     - haproxy
   vars_files:
     - "group_vars/secure_vars.yml"

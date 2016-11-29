@@ -1,7 +1,9 @@
 ---
-# defaults file for ssl-certs
-
-dehydrated_repo: https://github.com/lukas2511/dehydrated.git
-dehydrated_version: master
-dehydrated_keep_updated: yes
-dehydrated_dir: /opt/dehydrated
+ssl_certs_days: "365"
+ssl_certs_key_size: "2048"
+ssl_certs_country: "IN"
+ssl_certs_locality: "Bengaluru"
+ssl_certs_organization: "ThoughtWorks"
+ssl_certs_state: "Karnataka"
+ssl_certs_common_name: "*.twhosted.com"
+ssl_certs_fields: "/C={{ssl_certs_country}}/ST={{ssl_certs_state}}/L={{ssl_certs_locality}}/O={{ssl_certs_organization}}/CN={{ssl_certs_common_name}}"

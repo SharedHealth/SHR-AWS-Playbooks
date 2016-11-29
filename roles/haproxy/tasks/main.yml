@@ -34,24 +34,6 @@
       backup=yes
   with_items: "{{ proxy_instances.instances }}"
 
-- name: Allow listen access to haproxy http
-  delegate_to: "{{ item.tags.Name }}"
-  become: yes
-  iptables: chain=INPUT jump=ACCEPT protocol=tcp  destination_port=80 comment="HAPROXY HTTP"
-  with_items: "{{ proxy_instances.instances }}"
-
-- name: Allow listen access to haproxy https
-  delegate_to: "{{ item.tags.Name }}"
-  become: yes
-  iptables: chain=INPUT jump=ACCEPT protocol=tcp  destination_port=443 comment="HAPROXY HTTPS"
-  with_items: "{{ proxy_instances.instances }}"
-
-- name: save iptables
-  delegate_to: "{{ item.tags.Name }}"
-  become: yes
-  shell: iptables-save > /etc/sysconfig/iptables
-  with_items: "{{ proxy_instances.instances }}"
-
 - name: copy rsyslog configuration
   delegate_to: "{{ item.tags.Name }}"
   become: yes
@@ -89,16 +71,28 @@
     state=present
   with_items: "{{ proxy_instances.instances }}"
 
-- name: Set Selinux 8153 to allow outbound access
-  seport: ports=8153 proto=tcp setype=http_port_t state=present
-  become: yes
-  delegate_to: "{{ item.tags.Name }}"
-  with_items: "{{ proxy_instances.instances }}"
-
 - name: Set Selinux 8154 to allow outbound access
   seport: ports=8154 proto=tcp setype=http_port_t state=present
   become: yes
   delegate_to: "{{ item.tags.Name }}"
+  with_items: "{{ proxy_instances.instances }}"
+
+- name: Add https to dmz zone in firewalld
+  firewalld: service=https zone=dmz permanent=true state=enabled
+  become: yes
+  delegate_to: "{{ item.tags.Name }}"
+  with_items: "{{ proxy_instances.instances }}"
+
+- name: Add http to dmz zone in firewalld
+  firewalld: service=http zone=dmz permanent=true state=enabled
+  become: yes
+  delegate_to: "{{ item.tags.Name }}"
+  with_items: "{{ proxy_instances.instances }}"
+
+- name: Restart firewalld
+  delegate_to: "{{ item.tags.Name }}"
+  become: yes
+  service: name=firewalld state=restarted
   with_items: "{{ proxy_instances.instances }}"
 
 - name: Restart rsyslog

@@ -63,8 +63,10 @@ defaults
 # main frontend which proxys to the backends
 #---------------------------------------------------------------------
 frontend http-in
-        bind :443
-        reqadd X-Forwarded-Proto:\ https
+        bind :80
+        redirect scheme https if !{ ssl_fc }
+
+        bind :443 ssl crt {{ ssl_certs_pem_path }}
 
         acl host_ci_service hdr(host) -i hie-ci-server.twhosted.com
         use_backend ci_service if host_ci_service
@@ -82,13 +84,13 @@ frontend http-in
 # round robin balancing between the SHR Service backends
 #---------------------------------------------------------------------
 backend ci_service
-    server build-server 172.21.1.170:8154
+    server build-server 172.21.1.170:8154 ssl verify none
 
 backend dev_h1_service
-    server dev_h1_server 172.21.2.206:443
+    server dev_h1_server 172.21.2.206:443 ssl verify none
 
 backend dev_h2_service
-    server dev_h2_server 172.21.2.148:443
+    server dev_h2_server 172.21.2.148:443 ssl verify none
 
 backend dev_env_proxy
-    server dev_env_proxy_server 172.21.2.88:443
+    server dev_env_proxy_server 172.21.2.88:443 ssl verify none
