@@ -12,4 +12,3 @@
   vars:
     subnets: "{{ subnet_facts.subnets }}"
 
-

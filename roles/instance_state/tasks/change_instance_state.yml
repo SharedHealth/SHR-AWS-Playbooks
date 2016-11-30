@@ -1,0 +1,7 @@
+- ec2:
+    region: "{{aws_region}}"
+    aws_access_key: "{{ aws_access_key }}"
+    aws_secret_key: "{{ aws_secret_key }}"
+    instance_ids: "{{ item.id }}"
+    state: "{{ action }}"
+  with_items: env_instances.instances

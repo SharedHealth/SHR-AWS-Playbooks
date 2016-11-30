@@ -1,0 +1,18 @@
+---
+- name: Fetch instances
+  ec2_remote_facts:
+    aws_access_key: "{{ aws_access_key }}"
+    aws_secret_key: "{{ aws_secret_key }}"
+    region:           "{{ aws_region }}"
+    filters:
+      instance-state-name: "{{ current_state }}"
+      subnet-id: "{{ item.value }}"
+  when: item.key == env
+  with_dict: "{{ SubnetIds }}"
+  register: active_instances
+
+- include: change_instance_state.yml
+  when: env_instances.instances is defined and env_instances.instances > 0
+  with_items: "{{ active_instances.results }}"
+  loop_control:
+    loop_var: env_instances

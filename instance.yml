@@ -1,0 +1,27 @@
+- hosts: all
+  vars:
+    action: stopped
+    current_state: running
+  roles:
+    - fetch-facts
+    - instance_state
+  vars_files:
+    - "group_vars/secure_vars.yml"
+    - "group_vars/vars.yml"
+    - "group_vars/cidr_blocks.yml"
+  tags: 
+    - stop
+
+- hosts: all
+  vars:
+    action: running
+    current_state: stopped
+  roles:
+    - fetch-facts
+    - instance_state
+  vars_files:
+    - "group_vars/secure_vars.yml"
+    - "group_vars/vars.yml"
+    - "group_vars/cidr_blocks.yml"
+  tags:
+    - start
