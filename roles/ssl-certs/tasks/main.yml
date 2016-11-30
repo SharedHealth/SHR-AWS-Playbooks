@@ -5,7 +5,7 @@
     region:           "{{ aws_region }}"
     filters:
       instance-state-name: running
-      "tag:role": proxy-server
+      "tag:Name": "{{ installation_box_name }}"
   register: proxy_instances
 
 - name: Add proxy to dynamic host group
@@ -16,65 +16,6 @@
     ansible_user: centos
   with_items: "{{ proxy_instances.instances }}"
 
-- name: Ensure OpenSSL is installed
-  become: yes
-  yum: name=openssl state=latest
-  delegate_to: "{{ item.tags.Name }}"
-  with_items: "{{ proxy_instances.instances }}"
-
-- name: Ensure ssl folder exist
-  become: yes
-  file:
-    path: "{{ ssl_certs_path }}"
-    state: directory
-    mode: 0744
-  delegate_to: "{{ item.tags.Name }}"
-  with_items: "{{ proxy_instances.instances }}"
-
-- name: Generate RSA key
-  become: yes
-  command: openssl genrsa -out {{ ssl_certs_privkey_path }} {{ ssl_certs_key_size }} creates={{ ssl_certs_privkey_path }}
-  delegate_to: "{{ item.tags.Name }}"
-  with_items: "{{ proxy_instances.instances }}"
-
-- name: RSA key file ownership
-  become: yes
-  file: path={{ ssl_certs_privkey_path }} mode=0400
-  delegate_to: "{{ item.tags.Name }}"
-  with_items: "{{ proxy_instances.instances }}"
-
-- name: Generate CSR
-  command: openssl req -new -sha256 -subj "{{ ssl_certs_fields }}" -key {{ ssl_certs_privkey_path }} -out {{ ssl_certs_csr_path }} creates={{ ssl_certs_csr_path }}
-  become: yes
-  delegate_to: "{{ item.tags.Name }}"
-  with_items: "{{ proxy_instances.instances }}"
-  
-- name: CSR file ownership
-  file: path={{ ssl_certs_csr_path }} mode=0400
-  become: yes
-  delegate_to: "{{ item.tags.Name }}"
-  with_items: "{{ proxy_instances.instances }}"
-
-- name: Generate self-signed SSL certificate
-  command: openssl req -nodes -x509 -days {{ ssl_certs_days }} -in {{ ssl_certs_csr_path }} -key {{ ssl_certs_privkey_path }} -out {{ ssl_certs_cert_path }} -extensions v3_ca creates={{ ssl_certs_cert_path }}
-  become: yes
-  delegate_to: "{{ item.tags.Name }}"
-  with_items: "{{ proxy_instances.instances }}"
-
-- name: Self-signed SSL certificate file ownership
-  file: path={{ ssl_certs_cert_path }} mode=0400
-  become: yes
-  delegate_to: "{{ item.tags.Name }}"
-  with_items: "{{ proxy_instances.instances }}"
-
-- name: Create a pem file
-  command: touch {{ ssl_certs_pem_path }} && cat {{ ssl_certs_cert_path }} {{ ssl_certs_privkey_path }} > {{ ssl_certs_pem_path }} creates={{ ssl_certs_pem_path }}
-  become: yes
-  delegate_to: "{{ item.tags.Name }}"
-  with_items: "{{ proxy_instances.instances }}"
-
-- name: Self-signed SSL pem file ownership
-  file: path={{ ssl_certs_pem_path }} mode=0400
-  become: yes
+- include: generate.yml
   delegate_to: "{{ item.tags.Name }}"
   with_items: "{{ proxy_instances.instances }}"

@@ -1,0 +1,52 @@
+- name: Ensure OpenSSL is installed
+  become: yes
+  yum: name=openssl state=latest
+
+- name: Ensure ssl folder exist
+  become: yes
+  file:
+    path: "{{ ssl_certs_path }}"
+    state: directory
+    mode: 0744
+  
+- name: Check if private key is genrated previously
+  stat: path={{ ssl_certs_privkey_path }}
+  become: yes
+
+- name: Check if certificate is genrated previously
+  stat: path={{ ssl_certs_privkey_path }}
+  become: yes
+
+- name: Generate RSA key
+  become: yes
+  command: openssl genrsa -out {{ ssl_certs_privkey_path }} {{ ssl_certs_key_size }} creates={{ ssl_certs_privkey_path }}
+
+- name: RSA key file ownership
+  become: yes
+  file: path={{ ssl_certs_privkey_path }} mode=0400
+
+- name: Generate CSR
+  command: openssl req -new -sha256 -subj "{{ ssl_certs_fields }}" -key {{ ssl_certs_privkey_path }} -out {{ ssl_certs_csr_path }} creates={{ ssl_certs_csr_path }}
+  become: yes
+  
+- name: CSR file ownership
+  file: path={{ ssl_certs_csr_path }} mode=0400
+  become: yes
+
+- name: Generate self-signed SSL certificate
+  command: openssl req -nodes -x509 -days {{ ssl_certs_days }} -in {{ ssl_certs_csr_path }} -key {{ ssl_certs_privkey_path }} -out {{ ssl_certs_cert_path }} -extensions v3_ca creates={{ ssl_certs_cert_path }}
+  become: yes
+
+- name: Self-signed SSL certificate file ownership
+  file: path={{ ssl_certs_cert_path }} mode=0400
+  become: yes
+
+- name: Create a pem file
+  shell: cat {{ ssl_certs_cert_path }} {{ ssl_certs_privkey_path }} > {{ ssl_certs_pem_path }}
+  args:
+    creates: "{{ ssl_certs_pem_path }}"
+  become: yes
+
+- name: Self-signed SSL pem file ownership
+  file: path={{ ssl_certs_pem_path }} mode=0400
+  become: yes

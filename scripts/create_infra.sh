@@ -39,4 +39,4 @@ may be required${NC}\n"
 # 7. Run play with 'proxy' tag
 
 # Provide the tags to be run
-ansible-playbook -i inventory infra.yml -vvv --tags "${@:1}"
+ansible-playbook -i inventory infra.yml -v "${@:1}"
