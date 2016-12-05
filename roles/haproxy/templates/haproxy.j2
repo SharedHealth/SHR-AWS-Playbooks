@@ -84,7 +84,7 @@ frontend http-in
 # round robin balancing between the SHR Service backends
 #---------------------------------------------------------------------
 backend ci_service
-    server build-server 172.21.1.170:8154 ssl verify none
+    server build-server 172.21.1.135:8154 ssl verify none
 
 backend dev_h1_service
     server dev_h1_server 172.21.2.206:443 ssl verify none

@@ -13,7 +13,7 @@ build_server_spec:
          - volume_size: 40
            volume_type: gp2
            device_name: /dev/sda1
-           delete_on_termination: yes
+           delete_on_termination: no
            FilesystemSpecifications:
              volume_label: "root"
            mountpoint: /
