@@ -64,7 +64,11 @@ defaults
 #---------------------------------------------------------------------
 frontend http-in
         bind :80
-        redirect scheme https if !{ ssl_fc }
+
+        acl host_idp_service hdr(host) -i hie-idp-dev.twhosted.com
+        use_backend idp_service if host_idp_service
+
+        redirect scheme https if !{ ssl_fc } !{ hdr(Host) -i hie-idp-dev.twhosted.com }
 
         bind :443 ssl crt {{ ssl_certs_pem_path }}
 
@@ -83,6 +87,9 @@ frontend http-in
 #---------------------------------------------------------------------
 # round robin balancing between the SHR Service backends
 #---------------------------------------------------------------------
+backend idp_service
+    server idp-server 172.21.2.184:8084
+
 backend ci_service
     server build-server 172.21.1.135:8154 ssl verify none
 
