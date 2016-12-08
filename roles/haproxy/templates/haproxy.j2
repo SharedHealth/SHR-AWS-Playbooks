@@ -94,10 +94,10 @@ backend ci_service
     server build-server 172.21.1.135:8154 ssl verify none
 
 backend dev_h1_service
-    server dev_h1_server 172.21.2.206:443 ssl verify none
+    server dev_h1_server 172.21.2.148:443 ssl verify none
 
 backend dev_h2_service
-    server dev_h2_server 172.21.2.148:443 ssl verify none
+    server dev_h2_server 172.21.2.206:443 ssl verify none
 
 backend dev_env_proxy
     server dev_env_proxy_server 172.21.2.88:443 ssl verify none
