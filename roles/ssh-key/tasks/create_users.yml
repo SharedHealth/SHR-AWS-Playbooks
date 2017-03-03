@@ -1,7 +1,13 @@
+- name: Register users
+  shell: getent passwd | cut -f1 -d":" 
+  register: existing_users
+  delegate_to: "{{server.tags.Name}}"
+
 - name: Create developers_groups
   become: yes
   group: name={{developer_groups}} state=present
   delegate_to: "{{server.tags.Name}}"
+  when: "not item.name in existing_users.stdout_lines"
 
 - name: Create Users
   become: yes
@@ -12,6 +18,7 @@
     shell: "{{shell}}"
   delegate_to: "{{server.tags.Name}}"
   with_items: "{{developers}}"
+  when: "not item.name in existing_users.stdout_lines"
 
 - name: Add keys to account
   become: yes
@@ -22,6 +29,7 @@
     exclusive: yes
   delegate_to: "{{server.tags.Name}}"
   with_items: "{{developers}}"
+  when: "not item.name in existing_users.stdout_lines"
 
 - name: remove unauthorized user accounts
   become: yes
@@ -31,13 +39,16 @@
     remove: yes
   delegate_to: "{{server.tags.Name}}"
   with_items: "{{developers}}"
+  when: "not item.name in existing_users.stdout_lines"
 
 - name: Add developers_groups group to sudo
   become: yes
   lineinfile: "dest=/etc/sudoers state=present backup=yes regexp='^%{{developer_groups}}' insertafter='^# %wheel' line='%{{developer_groups}} ALL=(ALL) NOPASSWD: ALL' validate='visudo -cf %s'"
   delegate_to: "{{server.tags.Name}}"
+  when: "not item.name in existing_users.stdout_lines"
 
 - name: reload sshd
   become: yes
   service: name=sshd state=reloaded
   delegate_to: "{{server.tags.Name}}"
+  when: "not item.name in existing_users.stdout_lines"

@@ -5,6 +5,7 @@
     region:           "{{ aws_region }}"
     filters:
       instance-state-name: running
+      'tag:role': "{{ box_role }}"
   register: hie_server_instances
 
 - name: Add servers to dynamic host group
