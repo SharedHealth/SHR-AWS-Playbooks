@@ -1,0 +1,19 @@
+qa_box_spec:
+   Tags: {"role": "qa-box", "server_type": "private"}
+   StartIndex: 1
+   ExactCount: 1
+   InstanceType: m4.large
+   SecurityGroups:
+     - "{{ SecurityGroupIds.shr }}"
+   AmiId: "{{ available_amis.hie_ami }}"
+   SubnetId: "{{ SubnetIds.qa }}"
+   AssignPublicIp: no
+   InstanceVolumes:
+     - VolumeSpecifications:
+         - volume_size: 40
+           volume_type: gp2
+           device_name: /dev/sda1
+           delete_on_termination: yes
+           FilesystemSpecifications:
+             volume_label: "root"
+           mountpoint: /

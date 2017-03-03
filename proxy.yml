@@ -1,0 +1,9 @@
+# Provider installation_box_name to run on a specific box
+- hosts: all
+  roles:
+    - haproxy
+  vars_files:
+    - "group_vars/secure_vars.yml"
+    - "group_vars/vars.yml"
+  tags:
+    - proxy

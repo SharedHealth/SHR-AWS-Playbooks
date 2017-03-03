@@ -10,3 +10,10 @@ ec2_instances:
   - { hostname: dev-04, spec: "{{ dev_box_spec }}", allocate_eip: false }
   - { hostname: dev-05, spec: "{{ dev_box_spec }}", allocate_eip: false }
   - { hostname: dev-06, spec: "{{ dev_box_spec }}", allocate_eip: false }
+  - { hostname: qa-01, spec: "{{ qa_box_spec }}", allocate_eip: false }
+  - { hostname: qa-02, spec: "{{ qa_box_spec }}", allocate_eip: false }
+  - { hostname: qa-03, spec: "{{ qa_box_spec }}", allocate_eip: false }
+  - { hostname: qa-04, spec: "{{ qa_box_spec }}", allocate_eip: false }
+  - { hostname: qa-05, spec: "{{ qa_box_spec }}", allocate_eip: false }
+  - { hostname: qa-06, spec: "{{ qa_box_spec }}", allocate_eip: false }
+  - { hostname: qa-07, spec: "{{ qa_box_spec }}", allocate_eip: false }
