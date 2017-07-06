@@ -115,13 +115,13 @@ backend dev_env_proxy
     server dev_env_proxy_server 172.21.2.213:443 ssl verify none
 
 backend staging_h1_service
-    server staging_h1_server 172.21.3.4:443 ssl verify none
+    server staging_h1_server 172.21.5.230:443 ssl verify none
 
 backend staging_h2_service
-    server staging_h2_server 172.21.3.211:443 ssl verify none
+    server staging_h2_server 172.21.5.161:443 ssl verify none
 
 backend staging_chw_service
-    server staging_chw_server 172.21.3.140:443 ssl verify none
+    server staging_chw_server 172.21.5.101:443 ssl verify none
 
 backend staging_env_proxy
-    server staging_env_proxy_server 172.21.3.183:443 ssl verify none
+    server staging_env_proxy_server 172.21.5.85:443 ssl verify none
