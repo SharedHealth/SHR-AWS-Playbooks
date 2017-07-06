@@ -1,12 +1,12 @@
-qa_box_spec:
-   Tags: {"role": "qa-box", "server_type": "private"}
+staging_box_spec:
+   Tags: {"role": "staging-box", "server_type": "private"}
    StartIndex: 1
    ExactCount: 1
    InstanceType: m4.large
    SecurityGroups:
      - "{{ SecurityGroupIds.shr }}"
    AmiId: "{{ available_amis.hie_ami }}"
-   SubnetId: "{{ SubnetIds.qa }}"
+   SubnetId: "{{ SubnetIds.staging }}"
    AssignPublicIp: no
    InstanceVolumes:
      - VolumeSpecifications:

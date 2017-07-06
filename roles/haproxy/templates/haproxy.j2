@@ -68,9 +68,6 @@ frontend http-in
         acl host_idp_service_dev hdr(host) -i hie-idp-dev.twhosted.com
         use_backend idp_service_dev if host_idp_service_dev
 
-        acl host_idp_service_qa hdr(host) -i hie-idp-qa.twhosted.com
-        use_backend idp_service_qa if host_idp_service_qa
-
         redirect scheme https if !{ ssl_fc } !{ hdr(Host) -i hie-idp-dev.twhosted.com }
 
         bind :443 ssl crt {{ ssl_certs_pem_path }}
@@ -87,26 +84,23 @@ frontend http-in
         acl host_dev_env hdr_end(host) -i dev.twhosted.com
         use_backend dev_env_proxy if host_dev_env
 
-        acl host_qa_h1 hdr(host) -i h1-qa.twhosted.com
-        use_backend qa_h1_service if host_qa_h1
+        acl host_staging_h1 hdr(host) -i h1-aws-staging.twhosted.com
+        use_backend staging_h1_service if host_staging_h1
 
-        acl host_qa_h2 hdr(host) -i h2-qa.twhosted.com
-        use_backend qa_h2_service if host_qa_h2
+        acl host_staging_h2 hdr(host) -i h2-aws-staging.twhosted.com
+        use_backend staging_h2_service if host_staging_h2
 
-        acl host_qa_chw hdr(host) -i chw-qa.twhosted.com
-        use_backend qa_chw_service if host_qa_chw
+        acl host_staging_chw hdr(host) -i chw-aws-staging.twhosted.com
+        use_backend staging_chw_service if host_staging_chw
 
-        acl host_qa_env hdr_end(host) -i qa.twhosted.com
-        use_backend qa_env_proxy if host_qa_env
+        acl host_staging_env hdr_end(host) -i aws-staging.twhosted.com
+        use_backend staging_env_proxy if host_staging_env
 
 #---------------------------------------------------------------------
 # round robin balancing between the SHR Service backends
 #---------------------------------------------------------------------
 backend idp_service_dev
     server idp-server 172.21.2.184:8084
-
-backend idp_service_qa
-    server idp-server 172.21.3.61:8084
 
 backend ci_service
     server build-server 172.21.1.135:8154 ssl verify none
@@ -118,16 +112,16 @@ backend dev_h2_service
     server dev_h2_server 172.21.2.206:443 ssl verify none
 
 backend dev_env_proxy
-    server dev_env_proxy_server 172.21.2.88:443 ssl verify none
+    server dev_env_proxy_server 172.21.2.213:443 ssl verify none
 
-backend qa_h1_service
-    server qa_h1_server 172.21.3.4:443 ssl verify none
+backend staging_h1_service
+    server staging_h1_server 172.21.3.4:443 ssl verify none
 
-backend qa_h2_service
-    server qa_h2_server 172.21.3.211:443 ssl verify none
+backend staging_h2_service
+    server staging_h2_server 172.21.3.211:443 ssl verify none
 
-backend qa_chw_service
-    server qa_chw_server 172.21.3.140:443 ssl verify none
+backend staging_chw_service
+    server staging_chw_server 172.21.3.140:443 ssl verify none
 
-backend qa_env_proxy
-    server qa_env_proxy_server 172.21.3.183:443 ssl verify none
+backend staging_env_proxy
+    server staging_env_proxy_server 172.21.3.183:443 ssl verify none
