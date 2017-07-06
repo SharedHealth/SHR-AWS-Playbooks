@@ -84,16 +84,16 @@ frontend http-in
         acl host_dev_env hdr_end(host) -i dev.twhosted.com
         use_backend dev_env_proxy if host_dev_env
 
-        acl host_staging_h1 hdr(host) -i h1-aws-staging.twhosted.com
+        acl host_staging_h1 hdr(host) -i h1-staging.twhosted.com
         use_backend staging_h1_service if host_staging_h1
 
-        acl host_staging_h2 hdr(host) -i h2-aws-staging.twhosted.com
+        acl host_staging_h2 hdr(host) -i h2-staging.twhosted.com
         use_backend staging_h2_service if host_staging_h2
 
-        acl host_staging_chw hdr(host) -i chw-aws-staging.twhosted.com
+        acl host_staging_chw hdr(host) -i chw-staging.twhosted.com
         use_backend staging_chw_service if host_staging_chw
 
-        acl host_staging_env hdr_end(host) -i aws-staging.twhosted.com
+        acl host_staging_env hdr_end(host) -i staging.twhosted.com
         use_backend staging_env_proxy if host_staging_env
 
 #---------------------------------------------------------------------
